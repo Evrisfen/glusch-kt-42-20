@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using gluschKt_42_20.Model;
+using System.Reflection.Emit;
 
 namespace gluschKt_42_20.Database.Configurations
 {
@@ -26,8 +27,7 @@ namespace gluschKt_42_20.Database.Configurations
                 .IsRequired()
                 .HasColumnName("Subject_name")
                 .HasColumnType(ColumnType.String).HasMaxLength(100)
-                .HasComment("Предмет");
-
+            .HasComment("Предмет");
 
         }
     }

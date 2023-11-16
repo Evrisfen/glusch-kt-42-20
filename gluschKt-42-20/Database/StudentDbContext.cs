@@ -9,12 +9,15 @@ namespace gluschKt_42_20.Database
         DbSet<Student> Student {get;set;}
         DbSet<Group> Group { get;set;}
         DbSet<Subject> Subject { get;set;}
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        DbSet<Grade> Grade { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new StudentConfiguration());
         modelBuilder.ApplyConfiguration(new GroupConfiguration());
         modelBuilder.ApplyConfiguration(new SubjectConfiguration());
-    }
+        modelBuilder.ApplyConfiguration(new GradeConfiguration());
+        }
     public StudentDbContext(DbContextOptions<StudentDbContext> options) : base(options) 
         {
         }

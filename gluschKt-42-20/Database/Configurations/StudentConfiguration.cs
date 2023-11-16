@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using gluschKt_42_20.Model;
+using System.Reflection.Emit;
 
 namespace gluschKt_42_20.Database.Configurations
 {
@@ -56,7 +57,11 @@ namespace gluschKt_42_20.Database.Configurations
                 .HasIndex(p => p.GroupId,$"idx_{TableName}_fk_f_group_id");
 
             builder.Navigation(p => p.Group)
-                .AutoInclude();
+            .AutoInclude();
+
+
+
+
         }
 
         
