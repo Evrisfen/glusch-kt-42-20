@@ -48,11 +48,6 @@ namespace gluschKt_42_20.Database.Configurations
             builder.Navigation(p => p.Subject)
             .AutoInclude();
 
-
-           
-
-         
-
             //для студента
 
             builder.Property(p => p.StudentId)
