@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace gluschKt_42_20.Model
 {
@@ -9,6 +10,7 @@ namespace gluschKt_42_20.Model
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public int GroupId { get; set; }
-        public Group Group { get; set; }
+        [JsonIgnore]
+        public Group? Group { get; set; }
     }
 }

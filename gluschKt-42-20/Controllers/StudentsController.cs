@@ -1,6 +1,10 @@
-﻿using gluschKt_42_20.Filters.StudentFilters;
+﻿using gluschKt_42_20.Database;
+using gluschKt_42_20.Filters.StudentFilters;
 using gluschKt_42_20.Interfaces.StudentsInterface;
+using gluschKt_42_20.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace gluschKt_42_20.Controllers
 {
@@ -10,16 +14,76 @@ namespace gluschKt_42_20.Controllers
     {
        private readonly ILogger<StudentsController> _logger;
        private readonly IStudentService _studentService;
-        public StudentsController(ILogger<StudentsController> logger, IStudentService studentService)
+        private readonly StudentDbContext _dbContext;
+        public StudentsController(ILogger<StudentsController> logger, IStudentService studentService, StudentDbContext dbContext)
         {
             _logger = logger;
             _studentService = studentService;
+            _dbContext = dbContext;
         }
-        [HttpPost(Name = "GetStudentsByGroup")]
+
+        [HttpPost]
+        [Route("GetStudentsByGroup")]
         public async Task<IActionResult> GetStudentsByGroupAsync(StudentGroupFilter filter,CancellationToken cancellationToken = default)
         {
             var students = await _studentService.GetStudentsByGroupAsync(filter, cancellationToken);
             return Ok(students);
         }
+
+        [HttpPost]
+        [Route("GetStudentsByName")]
+        public async Task<IActionResult> GetStudentsByNameAsync(StudentNameFilter filter, CancellationToken cancellationToken = default)
+        {
+            var students = await _studentService.GetStudentsByNameAsync(filter, cancellationToken);
+            return Ok(students);
+        }
+
+        [HttpPost]
+        [Route("createStudent")]
+        public async Task<IActionResult> CreateStudent(Student Student)
+        {
+
+            await _studentService.CreateStudent(Student);
+
+            return Ok("create was successful");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateStudent(int id, Student Student)
+        {
+            if (id != Student.StudentId)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _studentService.UpdateStudent(Student);
+
+                return Ok("update was successful");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        // DELETE:
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+
+            var Student = await _dbContext.Student.FindAsync(id);
+
+            if (Student == null)
+            {
+                return NotFound();
+            }
+            await _studentService.DeleteStudent(Student);
+
+            return Ok("removal was successful");
+        }
     }
 }
+

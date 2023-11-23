@@ -6,9 +6,9 @@ namespace gluschKt_42_20.Database
 {
     public class StudentDbContext : DbContext
     {
-        DbSet<Student> Student {get;set;}
-        DbSet<Group> Group { get;set;}
-        DbSet<Subject> Subject { get;set;}
+        public DbSet<Student> Student {get;set;}
+        public DbSet<Group> Group { get;set;}
+        public DbSet<Subject> Subject { get;set;}
 
         DbSet<Grade> Grade { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
